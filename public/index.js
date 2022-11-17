@@ -1,6 +1,6 @@
 (function (l) {
   if (l.search[1] === '/') {
-    var decoded = l.search
+    let decoded = l.search
       .slice(1)
       .split('&')
       .map(function (s) {
