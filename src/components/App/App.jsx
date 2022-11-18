@@ -11,13 +11,30 @@ class App extends Component {
     contacts: [...PhonebookDefaultData],
     search: '',
   };
+  componentDidMount() {
+    const storage = localStorage.getItem("contacts")
+    const parsedContacts = JSON.parse(storage)
+    if (parsedContacts) {
+      this.setState({
+        contacts: parsedContacts
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
+    }
+  }
+
   addTodo = (name, phone) => {
     const todo = {
       id: nanoid(),
       name,
       phone,
     };
-    if (this.state.contacts.find(i => i.name === name)) {
+    const isExist = this.state.contacts.find(i => i.name === name)
+    if (isExist) {
       return alert(name + ' is already in contacts');
     }
     this.setState(prevState => ({
