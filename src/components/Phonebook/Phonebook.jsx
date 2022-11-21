@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Style from './Phonebook.module.css';
 import PhonebookForm from './PhonebookComponents/PhonebookForm';
 import PhonebookSearch from './PhonebookComponents/PhonebookSearch';
-import PhonebookContacts from './PhonebookComponents/PhonebookContacts';
+import PhonebookContactItem from "./PhonebookComponents/PhonebookContactsItem";
 
 class Phonebook extends Component {
   state = {
@@ -44,17 +44,22 @@ class Phonebook extends Component {
             handelInputValue={this.handelInputValue}
             onSubmit={this.handelSubmit}
           />
-          <ul className={Style.phonebook__contacts}>
-            <h2 className={Style.phonebook__title}>Contacts</h2>
-            <PhonebookSearch
-              stateSearch={stateSearch}
-              handelSearchValue={handelSearchValue}
-            />
-            <PhonebookContacts
-              stateContacts={stateContacts}
-              onDeleteContact={onDeleteContact}
-            />
-          </ul>
+          <h2 className={Style.phonebook__title}>Contacts</h2>
+          <PhonebookSearch
+            stateSearch={stateSearch}
+            handelSearchValue={handelSearchValue}
+          />
+          <div className={Style.phonebook__contacts}>
+            {stateContacts.map(({ name, id, phone }) => (
+              <PhonebookContactItem
+                name={name}
+                key={id}
+                id={id}
+                phone={phone}
+                onDeleteContact={onDeleteContact}
+              />
+            ))}
+          </div>
         </div>
       </div>
     );
