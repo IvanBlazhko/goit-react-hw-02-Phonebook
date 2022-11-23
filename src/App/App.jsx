@@ -1,34 +1,20 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 
-import Phonebook from '../Phonebook/Phonebook';
-import PhonebookDefaultData from '../Phonebook/PhonebookDefaultData.json';
+import PhonebookDefaultData from './Data/PhonebookDefaultData.json';
 
-import Style from './App.module.css';
+import Style from './Style/Phonebook.module.css'
+import PhonebookForm from "./Components/PhonebookForm";
+import PhonebookSearch from "./Components/PhonebookSearch";
+import PhonebookContacts from "./Components/PhonebookContacts";
 
 class App extends Component {
   state = {
     contacts: [...PhonebookDefaultData],
     search: '',
   };
-  componentDidMount() {
-    const storage = localStorage.getItem("contacts")
-    const parsedContacts = JSON.parse(storage)
-    if (parsedContacts) {
-      this.setState({
-        contacts: parsedContacts
-      })
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem("contacts", JSON.stringify(this.state.contacts))
-    }
-  }
-
-  addTodo = (name, phone) => {
-    const todo = {
+  addContact = (name, phone) => {
+    const newContact = {
       id: nanoid(),
       name,
       phone,
@@ -38,7 +24,7 @@ class App extends Component {
       return alert(name + ' is already in contacts');
     }
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, todo],
+      contacts: [...prevState.contacts, newContact],
     }));
   };
   onDeleteContact = Id => {
@@ -63,14 +49,23 @@ class App extends Component {
     const visibleContacts = this.getVisibleContacts();
     return (
       <div className={Style.app__wrapper}>
-        <Phonebook
-          title="My phonebook"
-          stateSearch={search}
-          stateContacts={visibleContacts}
-          addTodoContact={this.addTodo}
-          handelSearchValue={this.handelSearchValue}
-          onDeleteContact={this.onDeleteContact}
-        />
+        <div className={Style.phonebook__body}>
+          <h1 className={Style.phonebook__title}>Phonebook</h1>
+          <div>
+            <PhonebookForm
+              addContact={this.addContact}
+            />
+            <h2 className={Style.phonebook__title}>Contacts</h2>
+            <PhonebookSearch
+              stateSearch={search}
+              handelSearchValue={this.handelSearchValue}
+            />
+            <PhonebookContacts
+              visibleContacts={visibleContacts}
+              onDeleteContact={this.onDeleteContact}
+            />
+          </div>
+        </div>
       </div>
     );
   }

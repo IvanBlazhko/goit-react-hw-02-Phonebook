@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import Style from '../Phonebook.module.css';
+import Style from '../Style/Phonebook.module.css';
 
 export const PhonebookContact = ({ name, id, phone, onDeleteContact }) => {
   return (

@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import  React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Style from './Phonebook.module.css';
-import PhonebookForm from './PhonebookComponents/PhonebookForm';
-import PhonebookSearch from './PhonebookComponents/PhonebookSearch';
-import PhonebookContactItem from "./PhonebookComponents/PhonebookContactsItem";
+import Style from '../Style/Phonebook.module.css';
+import PhonebookForm from './PhonebookForm';
+import PhonebookSearch from './PhonebookSearch';
+import PhonebookContactItem from "./PhonebookContactsItem";
 
 class Phonebook extends Component {
   state = {
-    name: '',
-    tel: '',
+
   };
   handelSubmit = event => {
     event.preventDefault();
@@ -19,12 +18,7 @@ class Phonebook extends Component {
   reset = () => {
     this.setState({ name: '', tel: '' });
   };
-  handelInputValue = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
-  };
+
   render() {
     const {
       title,
